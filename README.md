@@ -53,28 +53,31 @@ FROM layoffs;
 A second staging table, `layoffs_staging2`, was later created to make it easier to identify and remove duplicate records.
 
 ---
+### 2️⃣ Identifying and Removing Duplicate Records
 
-### 2️⃣ Removing Duplicate Records
+Duplicate records were identified using the `ROW_NUMBER()` window function along with `OVER()` and `PARTITION BY`.
 
-Duplicate records were identified using the `ROW_NUMBER()` window function.
+The `PARTITION BY` clause was used to group records based on the relevant columns. If multiple rows contained the same values across these columns, they were considered potential duplicates.
 
-The following columns were considered when identifying duplicates:
+```sql
+ROW_NUMBER() OVER (
+    PARTITION BY company, location, industry, total_laid_off,
+                 percentage_laid_off, `date`, stage, country, funds_raised_millions
+) AS row_num
+```
 
-* Company
-* Location
-* Industry
-* Total laid off
-* Percentage laid off
-* Date
-* Stage
-* Country
-* Funds raised
+This assigned a sequential row number to each record within its group:
 
-Records with a `row_num` greater than `1` were treated as duplicates and removed.
+* `row_num = 1` → First occurrence of the record
+* `row_num > 1` → Duplicate occurrence
 
-This ensured that each relevant layoff record appeared only once in the cleaned dataset.
+The records with a `row_num` greater than `1` were then identified and removed, while the first occurrence (`row_num = 1`) was retained.
 
----
+This approach helped ensure that duplicate records were removed systematically without accidentally deleting the original record.
+
+Using `ROW_NUMBER()` with `OVER()` and `PARTITION BY` also made the duplicate identification process more reliable and reproducible.
+
+
 
 ### 3️⃣ Standardizing the Data
 
