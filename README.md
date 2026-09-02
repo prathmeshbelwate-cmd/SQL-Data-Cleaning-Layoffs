@@ -206,12 +206,23 @@ This project provided practical experience with several important SQL concepts:
 
 ## 📂 Repository Structure
 
+## 📁 Repository Structure
+
 ```text
 SQL-Data-Cleaning-Layoffs/
 │
-├── layoffs_data_cleaning.sql
-└── README.md
+├── README.md
+├── data cleaning project layoffs.sql
+├── raw data layoffs.csv
+└── data cleaning project layoffs.csv
 ```
+
+### 📄 Files Description
+
+* **README.md** — Project overview, objectives, SQL techniques used, and project details.
+* **data cleaning project layoffs.sql** — SQL script containing all data-cleaning queries and transformations.
+* **raw data layoffs.csv** — Original, uncleaned layoffs dataset.
+* **data cleaning project layoffs.csv** — Cleaned dataset generated after applying the SQL data-cleaning process.
 
 ---
 
